@@ -3,111 +3,37 @@ from pyspark.sql.functions import desc
 from pyspark.sql.functions import col
 from pyspark.sql import functions as func
 
+
+def Load(table):
+    df = spark.read \
+        .format("jdbc") \
+        .option("url", "jdbc:postgresql://localhost:5432/vladde") \
+        .option("dbtable", table) \
+        .option("user", "vlad") \
+        .option("password", "167943") \
+        .option("driver", "org.postgresql.Driver") \
+        .load()
+    return df
+
+
 spark = SparkSession \
     .builder \
     .appName("Python") \
     .config("spark.jars", "/home/vlad/postgresql-42.2.6.jar") \
     .getOrCreate()
 
-film_category = spark.read \
-    .format("jdbc") \
-    .option("url", "jdbc:postgresql://localhost:5432/vladde") \
-    .option("dbtable", "film_category") \
-    .option("user", "vlad") \
-    .option("password", "167943") \
-    .option("driver", "org.postgresql.Driver") \
-    .load()
+film_category = Load('film_category')
+category = Load('category')
+film = Load('film')
+film_actor = Load('film_actor')
+actor = Load('actor')
+inventory = Load('inventory')
+rental = Load('rental')
+payment = Load('payment')
+city = Load('city')
+address = Load('address')
+customer = Load('customer')
 
-category = spark.read \
-    .format("jdbc") \
-    .option("url", "jdbc:postgresql://localhost:5432/vladde") \
-    .option("dbtable", "category") \
-    .option("user", "vlad") \
-    .option("password", "167943") \
-    .option("driver", "org.postgresql.Driver") \
-    .load()
-
-film = spark.read \
-    .format("jdbc") \
-    .option("url", "jdbc:postgresql://localhost:5432/vladde") \
-    .option("dbtable", "film") \
-    .option("user", "vlad") \
-    .option("password", "167943") \
-    .option("driver", "org.postgresql.Driver") \
-    .load()
-
-film_actor = spark.read \
-    .format("jdbc") \
-    .option("url", "jdbc:postgresql://localhost:5432/vladde") \
-    .option("dbtable", "film_actor") \
-    .option("user", "vlad") \
-    .option("password", "167943") \
-    .option("driver", "org.postgresql.Driver") \
-    .load()
-
-actor = spark.read \
-    .format("jdbc") \
-    .option("url", "jdbc:postgresql://localhost:5432/vladde") \
-    .option("dbtable", "actor") \
-    .option("user", "vlad") \
-    .option("password", "167943") \
-    .option("driver", "org.postgresql.Driver") \
-    .load()
-
-inventory = spark.read \
-    .format("jdbc") \
-    .option("url", "jdbc:postgresql://localhost:5432/vladde") \
-    .option("dbtable", "inventory") \
-    .option("user", "vlad") \
-    .option("password", "167943") \
-    .option("driver", "org.postgresql.Driver") \
-    .load()
-
-rental = spark.read \
-    .format("jdbc") \
-    .option("url", "jdbc:postgresql://localhost:5432/vladde") \
-    .option("dbtable", "rental") \
-    .option("user", "vlad") \
-    .option("password", "167943") \
-    .option("driver", "org.postgresql.Driver") \
-    .load()
-
-payment = spark.read \
-    .format("jdbc") \
-    .option("url", "jdbc:postgresql://localhost:5432/vladde") \
-    .option("dbtable", "payment") \
-    .option("user", "vlad") \
-    .option("password", "167943") \
-    .option("driver", "org.postgresql.Driver") \
-    .load()
-
-city = spark.read \
-    .format("jdbc") \
-    .option("url", "jdbc:postgresql://localhost:5432/vladde") \
-    .option("dbtable", "city") \
-    .option("user", "vlad") \
-    .option("password", "167943") \
-    .option("driver", "org.postgresql.Driver") \
-    .load()
-
-address = spark.read \
-    .format("jdbc") \
-    .option("url", "jdbc:postgresql://localhost:5432/vladde") \
-    .option("dbtable", "address") \
-    .option("user", "vlad") \
-    .option("password", "167943") \
-    .option("driver", "org.postgresql.Driver") \
-    .load()
-
-customer = spark.read \
-    .format("jdbc") \
-    .option("url", "jdbc:postgresql://localhost:5432/vladde") \
-    .option("dbtable", "customer") \
-    .option("user", "vlad") \
-    .option("password", "167943") \
-    .option("driver", "org.postgresql.Driver") \
-    .load()
-# 7
 task = input('Input number of task(1-7): ')
 
 if int(task) == 1:
